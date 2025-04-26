@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./NavBar.css";
+import "./Navbar.css";
 import logo from "../assets/logo2.png";
 import hrFlag from "../assets/icons/flag.png";
 import enFlag from "../assets/icons/united-kingdom.png";
