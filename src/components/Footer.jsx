@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo2.png";
+import logo from "../assets/logo2.webp";
 import "./Footer.css";
 
 const Footer = () => {

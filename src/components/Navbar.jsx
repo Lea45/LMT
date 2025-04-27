@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
-import logo from "../assets/logo2.png";
-import hrFlag from "../assets/icons/flag.png";
-import enFlag from "../assets/icons/united-kingdom.png";
+import logo from "../assets/logo2.webp";
+import hrFlag from "../assets/icons/flag.webp";
+import enFlag from "../assets/icons/united-kingdom.webp";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

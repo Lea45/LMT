@@ -3,12 +3,12 @@ import validator from "validator";
 import "./Home.css";
 import "../components/Contact.css";
 import CTASection from "../components/CTASection.jsx";
-import webdevIcon from "../assets/services/webdev.png";
-import mobappIcon from "../assets/services/appdev.png";
-import onepageIcon from "../assets/services/onepage.png";
-import seoIcon from "../assets/services/seoOpt.png";
-import portfolioIcon from "../assets/services/portfolio.png";
-import maintenanceIcon from "../assets/services/maintenance.png";
+import webdevIcon from "../assets/services/webdev.webp";
+import mobappIcon from "../assets/services/appdev.webp";
+import onepageIcon from "../assets/services/onepage.webp";
+import seoIcon from "../assets/services/seoOpt.webp";
+import portfolioIcon from "../assets/services/portfolio.webp";
+import maintenanceIcon from "../assets/services/maintenance.webp";
 import {
   FaEnvelope,
   FaPhoneAlt,
@@ -19,18 +19,18 @@ import {
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
-import buddyImg from "../assets/bitebuddy.png";
-import warsImg from "../assets/starwars.png";
-import hubImg from "../assets/github.png";
-import styleImg from "../assets/smartstyle.png";
-import IvanaImg from "../assets/ivana.jpg";
+import buddyImg from "../assets/bitebuddy.webp";
+import warsImg from "../assets/starwars.webp";
+import hubImg from "../assets/github.webp";
+import styleImg from "../assets/smartstyle.webp";
+import IvanaImg from "../assets/ivana.webp";
 
-import collabIcon from "../assets/icons/collaboration.png";
-import efficientIcon from "../assets/icons/efficient.png";
-import scalableIcon from "../assets/icons/scalable.png";
-import mobileIcon from "../assets/icons/mobile.png";
-import seo2Icon from "../assets/icons/seo.png";
-import partnerIcon from "../assets/icons/partnership.png";
+import collabIcon from "../assets/icons/collaboration.webp";
+import efficientIcon from "../assets/icons/efficient.webp";
+import scalableIcon from "../assets/icons/scalable.webp";
+import mobileIcon from "../assets/icons/mobile.webp";
+import seo2Icon from "../assets/icons/seo.webp";
+import partnerIcon from "../assets/icons/partnership.webp";
 
 const Home = () => {
   const { t } = useTranslation();
