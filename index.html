@@ -245,13 +245,8 @@
       };
     </script>
 
-    <!-- Cookie Consent by TermsFeed -->
-    <script
-      type="text/javascript"
-      src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js"
-      charset="UTF-8"
-    ></script>
-    <script type="text/javascript" charset="UTF-8">
+    <script type="text/javascript" id="cookieConsentScript" defer></script>
+    <script>
       function acceptConsentUpdate() {
         gtag("consent", "update", {
           ad_storage: "granted",
@@ -260,23 +255,67 @@
           ad_personalization: "granted",
         });
       }
+
+      function actuallyLoadCookieConsent() {
+        var script = document.getElementById("cookieConsentScript");
+        if (!script.src) {
+          script.src =
+            "https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js";
+
+          script.onload = function () {
+            waitForCookieConsent();
+          };
+        }
+      }
+
+      function waitForCookieConsent(attempt = 0) {
+        if (
+          window.cookieconsent &&
+          typeof window.cookieconsent.run === "function"
+        ) {
+          cookieconsent.run({
+            notice_banner_type: "standalone",
+            consent_type: "express",
+            palette: "dark",
+            language: "en",
+            page_load_consent_levels: ["strictly-necessary"],
+            notice_banner_reject_button_hide: false,
+            preferences_center_close_button_hide: false,
+            page_refresh_confirmation_buttons: false,
+            website_name: "LeMatech - Digital",
+            website_privacy_policy_url:
+              "https://www.lematech-digital.com/privacy-policy",
+            onConsent: function () {
+              acceptConsentUpdate();
+            },
+          });
+        } else {
+          if (attempt < 20) {
+            setTimeout(function () {
+              waitForCookieConsent(attempt + 1);
+            }, 100);
+          } else {
+            console.error(
+              "TermsFeed cookieconsent nije dostupan nakon čekanja!"
+            );
+          }
+        }
+      }
+
       document.addEventListener("DOMContentLoaded", function () {
-        cookieconsent.run({
-          notice_banner_type: "standalone",
-          consent_type: "express",
-          palette: "dark",
-          language: "en",
-          page_load_consent_levels: ["strictly-necessary"],
-          notice_banner_reject_button_hide: false,
-          preferences_center_close_button_hide: false,
-          page_refresh_confirmation_buttons: false,
-          website_name: "LeMatech - Digital",
-          website_privacy_policy_url:
-            "https://www.lematech-digital.com/privacy-policy",
-          onConsent: function () {
-            acceptConsentUpdate();
-          },
-        });
+        setTimeout(function () {
+          document.addEventListener("scroll", actuallyLoadCookieConsent, {
+            once: true,
+          });
+          document.addEventListener("click", actuallyLoadCookieConsent, {
+            once: true,
+          });
+          document.addEventListener("mousemove", actuallyLoadCookieConsent, {
+            once: true,
+          });
+
+          setTimeout(actuallyLoadCookieConsent, 5000);
+        }, 2700);
       });
     </script>
 
@@ -293,10 +332,6 @@
       gtag('js', new Date());
       gtag('config', 'G-J9XF6CD8NT');
     </script>
-    <noscript
-      >Free cookie consent management tool by
-      <a href="https://www.termsfeed.com/">TermsFeed Generator</a></noscript
-    >
 
     <!-- Cookie Preferences Button -->
     <a
