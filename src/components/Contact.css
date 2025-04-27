@@ -429,6 +429,18 @@
   position: relative;
 }
 
+@media (min-width: 901px) and (max-width: 1437px) {
+  .contact-alt-wrapper {
+    gap: 2rem;
+  }
+  .reach-options {
+    flex: 0 0 45%;
+  }
+  .contact-alt-text {
+    flex: 0 0 50%;
+  }
+}
+
 @media (max-width: 900px) {
   .form-row {
     flex-direction: column;

@@ -86,7 +86,6 @@ const Footer = () => {
           <Link to="/terms-conditions">{t("Terms & Conditions")}</Link>
           <Link to="/privacy-policy">{t("Privacy Policy")}</Link>
         </nav>
-
         <div
           className="social-links animate-on-scroll fade-in"
           style={{ "--delay-order": "0.6s" }}
@@ -95,6 +94,7 @@ const Footer = () => {
             href="https://www.facebook.com/people/LeMatech-Digital/61575004322467/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Visit our Facebook page"
           >
             <FaFacebookF />
           </a>
@@ -102,6 +102,7 @@ const Footer = () => {
             href="https://www.instagram.com/lematechcode/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Visit our Instagram page"
           >
             <FaInstagram />
           </a>
@@ -109,6 +110,7 @@ const Footer = () => {
             href="https://www.linkedin.com/in/lea-var%C5%BEi%C4%87-71a731324/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Visit our LinkedIn profile"
           >
             <FaLinkedinIn />
           </a>

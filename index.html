@@ -2,6 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        analytics_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+      });
+    </script>
+
     <link rel="icon" href="/faviconR.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
@@ -238,6 +252,14 @@
       charset="UTF-8"
     ></script>
     <script type="text/javascript" charset="UTF-8">
+      function acceptConsentUpdate() {
+        gtag("consent", "update", {
+          ad_storage: "granted",
+          analytics_storage: "granted",
+          ad_user_data: "granted",
+          ad_personalization: "granted",
+        });
+      }
       document.addEventListener("DOMContentLoaded", function () {
         cookieconsent.run({
           notice_banner_type: "standalone",
@@ -251,6 +273,9 @@
           website_name: "LeMatech - Digital",
           website_privacy_policy_url:
             "https://www.lematech-digital.com/privacy-policy",
+          onConsent: function () {
+            acceptConsentUpdate();
+          },
         });
       });
     </script>
@@ -286,9 +311,11 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
-          document.getElementById("open_preferences_center")?.classList.add("show-cookie-button");
+          document
+            .getElementById("open_preferences_center")
+            ?.classList.add("show-cookie-button");
         }, 500);
       });
-    </script>    
+    </script>
   </body>
 </html>
