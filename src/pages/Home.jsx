@@ -271,6 +271,22 @@ const Home = () => {
     <div>
       <section id="home" className="hero">
         <div className="hero-container">
+          <img
+            src="/subtle-prism.svg"
+            alt="Background"
+            style={{
+              width: "1px",
+              height: "1px",
+              position: "absolute",
+              top: "0",
+              left: "0",
+              overflow: "hidden",
+              visibility: "hidden",
+              pointerEvents: "none",
+            }}
+            loading="eager"
+            decoding="async"
+          />
           <div className="hero-text">
             <h1 className="hero-title">
               {t("Build Fast. Rank Higher. Grow Exponentially.")}
