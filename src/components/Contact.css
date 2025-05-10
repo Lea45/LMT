@@ -361,7 +361,7 @@
 .social-links {
   display: flex;
   flex-direction: row;
-  gap: 1.4rem;
+  gap: 1.3rem;
 }
 
 .social-links a {
@@ -369,7 +369,7 @@
   align-items: center;
   gap: 0.5rem;
   color: #f8f8f8;
-  font-size: 1rem;
+  font-size: 0.95rem;
   text-decoration: none;
   transition: color 0.3s ease;
   font-weight: 500;
