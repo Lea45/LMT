@@ -3,24 +3,28 @@
 
   <url>
     <loc>https://www.lematech-digital.com/en/</loc>
+    <lastmod>2025-05-10</lastmod>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <url>
     <loc>https://www.lematech-digital.com/hr/</loc>
+    <lastmod>2025-05-10</lastmod>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <url>
     <loc>https://www.lematech-digital.com/privacy-policy</loc>
+    <lastmod>2025-05-10</lastmod>
     <priority>0.5</priority>
     <changefreq>yearly</changefreq>
   </url>
 
   <url>
     <loc>https://www.lematech-digital.com/terms-conditions</loc>
+    <lastmod>2025-05-10</lastmod>
     <priority>0.5</priority>
     <changefreq>yearly</changefreq>
   </url>
