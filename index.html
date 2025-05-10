@@ -292,18 +292,29 @@
     <script type="text/javascript" id="cookieConsentScript" defer></script>
     <script>
       function acceptConsentUpdate() {
+  // Update consent
   gtag("consent", "update", {
     ad_storage: "granted",
     analytics_storage: "granted",
     ad_user_data: "granted",
-    ad_personalization: "granted",
+    ad_personalization: "granted"
   });
 
-  gtag('js', new Date());
-  gtag('config', 'G-J9XF6CD8NT', {
-    page_path: window.location.pathname
-  });
+  // Dinamički dodaj GA skriptu
+  const gaScript = document.createElement("script");
+  gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-J9XF6CD8NT";
+  gaScript.async = true;
+  document.head.appendChild(gaScript);
+
+  // Kad je učitana, inicijaliziraj GA
+  gaScript.onload = () => {
+    gtag('js', new Date());
+    gtag('config', 'G-J9XF6CD8NT', {
+      page_path: window.location.pathname
+    });
+  };
 }
+
 
       function actuallyLoadCookieConsent() {
         var script = document.getElementById("cookieConsentScript");
