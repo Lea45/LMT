@@ -33,7 +33,9 @@
     <link rel="icon" href="/faviconR.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    
+
+    <link rel="preload" as="image" href="/cookie.webp" type="image/webp" />
+
 <!-- Preconnect for performance -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -41,8 +43,6 @@
 <!-- Preload critical font weight -->
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" media="all" />
-
-    <link rel="preload" as="image" href="/cookie.webp" type="image/webp" />
 
     <title>LeMatech - Digital | Web & App Development</title>
 
@@ -292,36 +292,13 @@
     <script type="text/javascript" id="cookieConsentScript" defer></script>
     <script>
       function acceptConsentUpdate() {
-  // Update consent
-  gtag("consent", "update", {
-    ad_storage: "granted",
-    analytics_storage: "granted",
-    ad_user_data: "granted",
-    ad_personalization: "granted"
-  });
-
-  // Dinamički dodaj GA skriptu
-  const gaScript = document.createElement("script");
-  gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-J9XF6CD8NT";
-  gaScript.async = true;
-  document.head.appendChild(gaScript);
-
-  // Kad je učitana, inicijaliziraj GA
- gaScript.onload = () => {
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-
-  gtag('js', new Date());
-  gtag('config', 'G-J9XF6CD8NT', {
-    page_path: window.location.pathname,
-    debug_mode: true
-  });
-};
-
-}
-
+        gtag("consent", "update", {
+          ad_storage: "granted",
+          analytics_storage: "granted",
+          ad_user_data: "granted",
+          ad_personalization: "granted",
+        });
+      }
 
       function actuallyLoadCookieConsent() {
         var script = document.getElementById("cookieConsentScript");
@@ -384,6 +361,20 @@
           setTimeout(actuallyLoadCookieConsent, 5000);
         }, 2700);
       });
+    </script>
+
+    <!-- Google Analytics -->
+    <script
+      type="text/plain"
+      data-cookie-consent="tracking"
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-J9XF6CD8NT"
+    ></script>
+    <script type="text/plain" data-cookie-consent="tracking">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-J9XF6CD8NT');
     </script>
 
     <!-- Cookie Preferences Button -->
