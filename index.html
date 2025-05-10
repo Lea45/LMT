@@ -92,16 +92,30 @@
 
     <!-- Canonical Link -->
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const path = window.location.pathname.split("/")[1];
-        const lang = path.match(/^(en|hr)$/) ? path : "en";
-        const canonicalURL = `https://www.lematech-digital.com/${lang}/`;
-        const link = document.createElement("link");
-        link.rel = "canonical";
-        link.href = canonicalURL;
-        document.head.appendChild(link);
-      });
-    </script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const path = window.location.pathname;
+
+    let canonicalURL = "https://www.lematech-digital.com";
+
+    if (path === "/" || path === "/en/") {
+      canonicalURL = "https://www.lematech-digital.com/en/";
+    } else if (path.startsWith("/hr")) {
+      canonicalURL = "https://www.lematech-digital.com/hr/";
+    } else if (path.startsWith("/privacy-policy")) {
+      canonicalURL = "https://www.lematech-digital.com/privacy-policy";
+    } else if (path.startsWith("/terms-conditions")) {
+      canonicalURL = "https://www.lematech-digital.com/terms-conditions";
+    }
+
+    const link = document.createElement("link");
+    link.rel = "canonical";
+    link.href = canonicalURL;
+    document.head.appendChild(link);
+
+    const lang = canonicalURL.includes("/hr/") ? "hr" : "en";
+    document.documentElement.lang = lang;
+  });
+</script>
 
     <!-- Structured Data: SoftwareCompany with Services -->
     <script type="application/ld+json">
