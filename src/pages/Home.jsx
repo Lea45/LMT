@@ -269,138 +269,138 @@ const Home = () => {
 
   const [openWindow, setOpenWindow] = useState(null);
 
-const toggleWindow = (key) => {
-  setOpenWindow(prev => (prev === key ? null : key));
-};
-
+  const toggleWindow = (key) => {
+    setOpenWindow((prev) => (prev === key ? null : key));
+  };
 
   return (
     <div>
-<section id="home" className="hero">
-  <div className="hero-bubbles" aria-hidden="true">
-    <span className="bubble b1"></span>
-    <span className="bubble b2"></span>
-    <span className="bubble b3"></span>
-    <span className="bubble b4"></span>
-    <span className="bubble b5"></span>
-  </div>
-
-  <div className="hero-container">
-    <img
-      src="/subtle-prism.svg"
-      alt="Background"
-      style={{
-        width: "1px",
-        height: "1px",
-        position: "absolute",
-        top: "0",
-        left: "0",
-        overflow: "hidden",
-        visibility: "hidden",
-        pointerEvents: "none",
-      }}
-      loading="eager"
-      decoding="async"
-    />
-
-    {/* DEV WINDOWS STACK */}
-    <div className="dev-stack">
-      {/* TOP WINDOW */}
-      <button
-        type="button"
-        className={`dev-window ${
-          openWindow === "top" ? "is-open" : ""
-        } ${openWindow === "bottom" ? "is-dim" : ""}`}
-        onClick={() => toggleWindow("top")}
-      >
-        <div className="dev-window-bar">
-          <span className="dot red"></span>
-          <span className="dot yellow"></span>
-          <span className="dot green"></span>
-          <span className="dev-title">custom development</span>
+      <section id="home" className="hero">
+        <div className="hero-bubbles" aria-hidden="true">
+          <span className="bubble b1"></span>
+          <span className="bubble b2"></span>
+          <span className="bubble b3"></span>
+          <span className="bubble b4"></span>
+          <span className="bubble b5"></span>
         </div>
 
-        <div className="dev-content">
-          <div className="dev-line">
-            {t("We build custom websites and web applications.")}
-          </div>
-          <div className="dev-line dev-muted">
-            {t("No templates. No WordPress. Just real code.")}
+        <div className="hero-container">
+          <img
+            src="/subtle-prism.svg"
+            alt="Background"
+            style={{
+              width: "1px",
+              height: "1px",
+              position: "absolute",
+              top: "0",
+              left: "0",
+              overflow: "hidden",
+              visibility: "hidden",
+              pointerEvents: "none",
+            }}
+            loading="eager"
+            decoding="async"
+          />
+
+          {/* DEV WINDOWS STACK */}
+          <div className="dev-stack">
+            {/* TOP WINDOW */}
+            <button
+              type="button"
+              className={`dev-window ${openWindow === "top" ? "is-open" : ""} ${
+                openWindow === "bottom" ? "is-dim" : ""
+              }`}
+              onClick={() => toggleWindow("top")}
+            >
+              <div className="dev-window-bar">
+                <span className="dot red"></span>
+                <span className="dot yellow"></span>
+                <span className="dot green"></span>
+                <span className="dev-title"> {t("custom development")}</span>
+              </div>
+
+              <div className="dev-content">
+                <div className="dev-line">
+                  {t("We build custom websites and web applications.")}
+                </div>
+                <div className="dev-line dev-muted">
+                  {t("No templates. No WordPress. Just real code.")}
+                </div>
+
+                <div className="dev-extra">
+                  <div className="dev-line">
+                    {t("We build tools that make your work easier.")}
+                  </div>
+                  <div className="dev-line dev-muted">
+                    {t("If you can imagine it — we can build it.")}
+                  </div>
+                </div>
+              </div>
+            </button>
+
+            {/* BOTTOM WINDOW */}
+            <button
+              type="button"
+              className={`dev-window ${
+                openWindow === "bottom" ? "is-open" : ""
+              } ${openWindow === "top" ? "is-dim" : ""}`}
+              onClick={() => toggleWindow("bottom")}
+            >
+              <div className="dev-window-bar">
+                <span className="dot red"></span>
+                <span className="dot yellow"></span>
+                <span className="dot green"></span>
+                <span className="dev-title"> {t("tech & delivery")}</span>
+              </div>
+
+              <div className="dev-content">
+                <div className="dev-line">
+                  {t("We use modern technology to build reliable solutions.")}
+                </div>
+
+                <div className="dev-line dev-muted">
+                  {t(
+                    "Your website works fast, safely and without complications."
+                  )}
+                </div>
+
+                <div className="dev-extra">
+                  <div className="dev-line">
+                    {t("Clear design that works perfectly on all devices.")}
+                  </div>
+
+                  <div className="dev-line dev-muted">
+                    {t("Built to support your business as it grows.")}
+                  </div>
+                </div>
+              </div>
+            </button>
           </div>
 
-          <div className="dev-extra">
-            <div className="dev-line">
-              {t("Dashboards, booking systems, memberships, automations.")}
-            </div>
-            <div className="dev-line dev-muted">
-              {t("If you can imagine it — we can build it.")}
+          {/* HERO CARD */}
+          <div className="hero-text">
+            <h1 className="hero-title">
+              {t("We don’t use WordPress.")} <br />
+              <span className="hero-line2">{t("We code.")}</span>
+            </h1>
+
+            <h2 className="hero-subtitle">
+              {t(
+                "Custom-built websites and applications developed from scratch, without limitations."
+              )}
+            </h2>
+
+            <div className="hero-buttons">
+              <button
+                onClick={() => smoothScrollToSection("contact")}
+                className="cta-button"
+              >
+                {t("Request a quote")}
+              </button>
             </div>
           </div>
         </div>
-      </button>
-
-      {/* BOTTOM WINDOW */}
-      <button
-        type="button"
-        className={`dev-window ${
-          openWindow === "bottom" ? "is-open" : ""
-        } ${openWindow === "top" ? "is-dim" : ""}`}
-        onClick={() => toggleWindow("bottom")}
-      >
-        <div className="dev-window-bar">
-          <span className="dot red"></span>
-          <span className="dot yellow"></span>
-          <span className="dot green"></span>
-          <span className="dev-title">tech & delivery</span>
-        </div>
-
-        <div className="dev-content">
-          <div className="dev-line">
-            {t("React, Node, Firebase. SEO-ready by default.")}
-          </div>
-          <div className="dev-line dev-muted">
-            {t("Fast, secure and scalable solutions.")}
-          </div>
-
-          <div className="dev-extra">
-            <div className="dev-line">
-              {t("Performance, clean UI, responsive layouts.")}
-            </div>
-            <div className="dev-line dev-muted">
-              {t("Built to grow with your business.")}
-            </div>
-          </div>
-        </div>
-      </button>
-    </div>
-
-    {/* HERO CARD */}
-    <div className="hero-text">
-      <h1 className="hero-title">
-        {t("We don’t use WordPress.")} <br />
-        <span className="hero-line2">{t("We code.")}</span>
-      </h1>
-
-      <h2 className="hero-subtitle">
-        {t(
-          "Custom-built websites and applications developed from scratch, without limitations."
-        )}
-      </h2>
-
-      <div className="hero-buttons">
-        <button
-          onClick={() => smoothScrollToSection("contact")}
-          className="cta-button"
-        >
-          {t("Request a quote")}
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
+      </section>
 
       <section id="about" className="about">
         <h2 className="animate-on-scroll fade-in">{t("What We Do")}</h2>
