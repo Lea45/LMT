@@ -1,125 +1,88 @@
 .cta-section {
-  margin-top: 5rem;
-  display: flex;
-  justify-content: center;
-  padding: 4rem 1rem;
+  background-color: #1a1a1a;
+  padding: 3rem 2rem 5rem;
+  margin-top: 0;
 }
 
-.cta-card {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  gap: 3rem;
-  background: linear-gradient(135deg, #48cae4, #0096c7);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 1rem;
-  padding: 2rem;
-  backdrop-filter: blur(10px);
-  max-width: 1100px;
-  width: 100%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+.cta-content {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.cta-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-}
-
-.shape {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  animation: float 6s ease-in-out infinite;
-}
-
-.shape1 {
-  width: 300px;
-  height: 300px;
-  top: -150px;
-  right: -150px;
-}
-
-.shape2 {
-  width: 300px;
-  height: 300px;
-  bottom: -100px;
-  left: -100px;
-  animation-delay: 3s;
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(20px);
-  }
-}
-
-.cta-text {
-  color: #111111;
-  flex: 1;
-  text-align: left;
-  padding-left: 4rem;
-}
-
-.cta-text h2 {
-  color: #111111;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+.cta-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+  color: #f8f8f8;
+  letter-spacing: -0.02em;
   line-height: 1.2;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  margin-bottom: 3.5rem;
 }
 
-.cta-text p {
-  color: #333333;
+.cta-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  margin-bottom: 4rem;
+  text-align: left;
+}
+
+.cta-step {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+}
+
+.cta-step-number {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: rgba(72, 202, 228, 0.35);
+  line-height: 1.1;
+  flex-shrink: 0;
+  width: 44px;
+}
+
+.cta-step-body h3 {
+  font-family: "Montserrat", sans-serif;
   font-size: 1.1rem;
-  margin-bottom: 1.25rem;
-  line-height: 1.6;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  font-weight: 700;
+  color: #f8f8f8;
+  margin: 0 0 0.55rem;
+  line-height: 1.3;
 }
 
-.cta-text .subtext {
-  color: #444444;
-  opacity: 1;
-  font-size: 1rem;
-  font-weight: 500;
-  font-style: italic;
-  margin-bottom: 1.5rem;
+.cta-step-body p {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.7;
+  margin: 0;
 }
 
 .cta-button {
-  background-color: #000000;
-  border: 2px solid transparent;
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 1rem 2.5rem;
-  border-radius: 50px;
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(72, 202, 228, 1), rgba(255, 255, 255, 0.92));
+  border: none;
+  color: #050505;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 1.1rem 3.5rem;
+  border-radius: 999px;
   cursor: pointer;
-  transition: background-color 0.5s ease, box-shadow 0.3s ease, color 0.3s ease;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  z-index: 100;
+  min-width: 260px;
+  transition: filter 0.2s ease, transform 0.2s ease;
 }
 
 .cta-button:hover {
-  background-color: #ffffff;
-  color: #000000;
-  border: 2px solid transparent;
+  filter: brightness(1.06);
+  transform: translateY(-2px);
 }
 
-.cta-illustration {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cta-illustration img {
-  max-width: 80%;
-  height: auto;
+.cta-button:active {
+  transform: translateY(0) scale(0.99);
 }
 
 .cta-section.animate-on-scroll {
@@ -133,99 +96,27 @@
   transform: translateY(0);
 }
 
-@media (max-width: 900px) {
-  .cta-card {
-    flex-direction: column;
-    gap: 2rem;
-    padding: 1.5rem;
-    max-width: 500px;
-    margin: 0 auto;
-    width: 90%;
-  }
-  .cta-illustration {
-    order: -1;
-    margin-bottom: 1rem;
-  }
-  .cta-text {
-    padding-left: 0;
-    text-align: center;
-  }
-  .cta-illustration img {
-    max-width: 80%;
-  }
-  .cta-button {
-    width: 100%;
-  }
-  .cta-text h2 {
-    font-size: 2rem;
-  }
-  .cta-text p {
-    font-size: 1rem;
-  }
-  .cta-text .subtext {
-    text-align: center;
-  }
-}
-
 @media (max-width: 600px) {
   .cta-section {
-    padding: 3rem 1rem;
+    padding: 3rem 1.5rem 4rem;
   }
-  .cta-card {
-    gap: 1.5rem;
-    padding: 1rem;
-    max-width: 400px;
-    margin: 0 auto;
+
+  .cta-step {
+    gap: 1rem;
   }
-  .cta-illustration {
-    order: -1;
-    margin-bottom: 0.75rem;
+
+  .cta-step-number {
+    font-size: 1.6rem;
+    width: 38px;
   }
-  .cta-illustration img {
-    max-width: 70%;
+
+  .cta-step-body p {
+    font-size: 0.97rem;
   }
-  .cta-text h2 {
-    font-size: 1.75rem;
-  }
-  .cta-text p {
-    font-size: 1rem;
-  }
-  .cta-text .subtext {
-    font-size: 0.9rem;
-  }
-  .shape1,
-  .shape2 {
-    display: none;
-  }
+
   .cta-button {
     width: 100%;
-  }
-}
-
-@media (max-width: 400px) {
-  .cta-section {
-    padding: 0px 0.5rem;
-  }
-  .cta-card {
-    padding: 0.75rem;
-    max-width: 320px;
-    margin: 0 auto;
-  }
-  .cta-illustration {
-    order: -1;
-    margin-bottom: 0.5rem;
-  }
-  .cta-illustration img {
-    max-width: 60%;
-  }
-  .cta-text h2 {
-    font-size: 1.5rem;
-  }
-  .cta-text p {
-    font-size: 0.9rem;
-  }
-  .cta-button {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.85rem;
+    min-width: unset;
+    font-size: 1rem;
   }
 }

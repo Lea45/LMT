@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
@@ -15,20 +14,16 @@ const Footer = () => {
     ? pathSegments[0]
     : "en";
 
-  const smoothScrollToSection = (event, sectionId) => {
-    event.preventDefault();
-    const targetElement = document.getElementById(sectionId);
-    if (!targetElement) {
-      if (location.pathname !== `/${currentLang}/`) {
-        navigate(`/${currentLang}/`);
-        setTimeout(() => {
-          document
-            .getElementById(sectionId)
-            ?.scrollIntoView({ behavior: "smooth" });
-        }, 500);
-      }
+  const scrollTo = (e, sectionId) => {
+    e.preventDefault();
+    const el = document.getElementById(sectionId);
+    if (!el) {
+      navigate(`/${currentLang}/`);
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+      }, 500);
     } else {
-      const targetPosition = targetElement.offsetTop - 10;
+      const targetPosition = el.offsetTop - 10;
       const startPosition = window.scrollY;
       const distance = targetPosition - startPosition;
       const duration = Math.abs(distance) > 1000 ? 1600 : 800;
@@ -42,13 +37,7 @@ const Footer = () => {
       const scroll = (currentTime) => {
         if (!startTime) startTime = currentTime;
         const timeElapsed = currentTime - startTime;
-        const next = easeInOutQuad(
-          timeElapsed,
-          startPosition,
-          distance,
-          duration
-        );
-        window.scrollTo(0, next);
+        window.scrollTo(0, easeInOutQuad(timeElapsed, startPosition, distance, duration));
         if (timeElapsed < duration) requestAnimationFrame(scroll);
         else window.scrollTo(0, targetPosition);
       };
@@ -59,71 +48,79 @@ const Footer = () => {
 
   return (
     <footer className="footer">
-      <div className="footer-top">
-        <div
-          className="brand-nav animate-on-scroll fade-in"
-          style={{ "--delay-order": "0.2s" }}
-          data-threshold="0.8"
-        >
+      <div className="footer-inner">
+
+        {/* Column 1: Brand */}
+        <div className="footer-col">
           <a
             href={`/${currentLang}/#home`}
-            onClick={(e) => smoothScrollToSection(e, "home")}
-            className="brand-link"
+            onClick={(e) => scrollTo(e, "home")}
+            className="footer-logo-link"
           >
-            <img
-              src={logo}
-              alt="LeMatech - Digital Logo"
-              className="footer-logo"
-            />
-            <span className="brand-name">{t("LeMatech - Digital")}</span>
+            <img src={logo} alt="LeMatech Digital Logo" className="footer-logo" />
+            <span className="footer-brand-name">LeMatech Digital</span>
           </a>
+          <p className="footer-tagline">
+            {t("Digital booking systems and web apps for service businesses.")}
+          </p>
         </div>
 
-        <nav
-          className="footer-nav animate-on-scroll fade-in"
-          style={{ "--delay-order": "0.4s" }}
-        >
-          <Link to="/terms-conditions">{t("Terms & Conditions")}</Link>
-          <Link to="/privacy-policy">{t("Privacy Policy")}</Link>
-        </nav>
-        <div
-          className="social-links animate-on-scroll fade-in"
-          style={{ "--delay-order": "0.6s" }}
-        >
-          <a
-            href="https://www.facebook.com/people/LeMatech-Digital/61575004322467/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Visit our Facebook page"
-          >
-            <FaFacebookF />
-          </a>
-          <a
-            href="https://www.instagram.com/lematechcode/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Visit our Instagram page"
-          >
-            <FaInstagram />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/lea-var%C5%BEi%C4%87-71a731324/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Visit our LinkedIn profile"
-          >
-            <FaLinkedinIn />
-          </a>
+        {/* Column 2: Links */}
+        <div className="footer-col">
+          <h4 className="footer-col-heading">{t("Links")}</h4>
+          <nav className="footer-nav">
+            <a href={`/${currentLang}/#home`} onClick={(e) => scrollTo(e, "home")}>
+              {t("Home")}
+            </a>
+            <a href={`/${currentLang}/#contact`} onClick={(e) => scrollTo(e, "contact")}>
+              {t("Contact")}
+            </a>
+            <Link to="/terms-conditions">{t("Terms & Conditions")}</Link>
+            <Link to="/privacy-policy">{t("Privacy Policy")}</Link>
+          </nav>
         </div>
+
+        {/* Column 3: Contact */}
+        <div className="footer-col">
+          <h4 className="footer-col-heading">{t("Contact")}</h4>
+          <div className="footer-contact-list">
+            <a href="mailto:info@lematech-digital.com">info@lematech-digital.com</a>
+            <a href="tel:+385911529422">+385 91 152 9422</a>
+            <div className="footer-social">
+              <a
+                href="https://www.facebook.com/people/LeMatech-Digital/61575004322467/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+              >
+                <FaFacebookF />
+              </a>
+              <a
+                href="https://www.instagram.com/lematechcode/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
+                <FaInstagram />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/lea-var%C5%BEi%C4%87-71a731324/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedinIn />
+              </a>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div
-        className="footer-bottom animate-on-scroll fade-in"
-        style={{ "--delay-order": "0.8s" }}
-      >
-        <p>
-          {t("© 2025 Powered by: LeMatech – Digital | All Rights Reserved")}
-        </p>
+      <div className="footer-bottom">
+        <div className="footer-bottom-inner">
+          <p>{t("© 2025 LeMatech Digital. All rights reserved.")}</p>
+        </div>
       </div>
     </footer>
   );

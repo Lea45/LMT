@@ -1,37 +1,45 @@
-import React from "react";
 import "./CTASection.css";
-import analyticsImg from "../assets/icons/analytics.webp";
+
+const steps = [
+  {
+    num: "01",
+    titleKey: "Understand Your Business",
+    descKey: "We go through how you currently manage bookings, clients and daily operations.",
+  },
+  {
+    num: "02",
+    titleKey: "Build the System",
+    descKey: "I design and develop a digital solution tailored to your workflow.",
+  },
+  {
+    num: "03",
+    titleKey: "Launch and Improve",
+    descKey: "After launch, the system is refined based on real usage and feedback.",
+  },
+];
 
 export default function CTASection({ t, smoothScrollToSection }) {
   return (
     <section className="cta-section animate-on-scroll" data-threshold="0.5">
       <div className="cta-content">
-        <div className="cta-card">
-          <div className="shape shape1" />
-          <div className="shape shape2" />
-          <div className="cta-text">
-            <h2>{t("Tired of Agencies That Overcharge and Underdeliver?")}</h2>
-            <p>
-              {t(
-                "We’re a new kind of digital partner—lean, creative, and obsessed with results. We build fast, modern websites that get noticed and get clicks."
-              )}
-            </p>
-            <p className="subtext">
-              {t(
-                "Let’s start with a quick chat about your goals. No pressure, just possibilities."
-              )}
-            </p>
-            <button
-              className="cta-button"
-              onClick={() => smoothScrollToSection("contact")}
-            >
-              {t("Schedule a Free Discovery Call")}
-            </button>
-          </div>
-          <div className="cta-illustration">
-            <img src={analyticsImg} alt="Analytics Illustration" />
-          </div>
+        <h2 className="cta-title">{t("cta_title")}</h2>
+        <div className="cta-steps">
+          {steps.map((step, i) => (
+            <div key={i} className="cta-step">
+              <span className="cta-step-number">{step.num}</span>
+              <div className="cta-step-body">
+                <h3>{t(step.titleKey)}</h3>
+                <p>{t(step.descKey)}</p>
+              </div>
+            </div>
+          ))}
         </div>
+        <button
+          className="cta-button"
+          onClick={() => smoothScrollToSection("contact")}
+        >
+          {t("cta_button")}
+        </button>
       </div>
     </section>
   );

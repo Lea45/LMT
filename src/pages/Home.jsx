@@ -1,14 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import validator from "validator";
 import "./Home.css";
 import "../components/Contact.css";
 import CTASection from "../components/CTASection.jsx";
-import webdevIcon from "../assets/services/webdev.webp";
-import mobappIcon from "../assets/services/appdev.webp";
-import onepageIcon from "../assets/services/onepage.webp";
-import seoIcon from "../assets/services/seoOpt.webp";
-import portfolioIcon from "../assets/services/portfolio.webp";
-import maintenanceIcon from "../assets/services/maintenance.webp";
 import {
   FaEnvelope,
   FaPhoneAlt,
@@ -16,68 +10,62 @@ import {
   FaInstagram,
   FaLinkedinIn,
   FaShareAlt,
+  FaCalendarAlt,
+  FaTachometerAlt,
+  FaBell,
+  FaSearch,
+  FaGoogle,
+  FaHandshake,
+  FaBolt,
+  FaMobileAlt,
+  FaShieldAlt,
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
-import buddyImg from "../assets/bitebuddy.webp";
-import warsImg from "../assets/starwars.webp";
-import hubImg from "../assets/github.webp";
-import styleImg from "../assets/smartstyle.webp";
-import IvanaImg from "../assets/ivana.webp";
+import mgInterijerImg from "../assets/mg-interijeri.jpeg";
+import gioiaImg from "../assets/gioia .jpeg";
+import markoCakanImg from "../assets/markocakan.jpeg";
 
-import collabIcon from "../assets/icons/collaboration.webp";
-import efficientIcon from "../assets/icons/efficient.webp";
-import scalableIcon from "../assets/icons/scalable.webp";
-import mobileIcon from "../assets/icons/mobile.webp";
-import seo2Icon from "../assets/icons/seo.webp";
-import partnerIcon from "../assets/icons/partnership.webp";
 
 const Home = () => {
   const { t } = useTranslation();
 
+  const [expandedReviews, setExpandedReviews] = useState({});
+  const toggleReview = (i) =>
+    setExpandedReviews((prev) => ({ ...prev, [i]: !prev[i] }));
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
-    subject: "",
     message: "",
     gdprConsent: false,
   });
 
   const [alert, setAlert] = useState({ message: "", type: "" });
 
-  const elementRefs = useRef([]);
+
+  // Typewriter effect for hero title line 2
+  const fullText = t("hero_title_2");
+  const [typedText, setTypedText] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      document.querySelector(".hero-text")?.classList.add("animate");
-      document.querySelector(".hero-image")?.classList.add("animate");
-    }, 100);
-  }, []);
-
-  useEffect(() => {
-    const observerOptions = { threshold: 0.2 };
-
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
+    setTypedText("");
+    const startDelay = setTimeout(() => {
+      let i = 0;
+      const interval = setInterval(() => {
+        i++;
+        setTypedText(fullText.slice(0, i));
+        if (i >= fullText.length) {
+          clearInterval(interval);
+          setTimeout(() => setShowCursor(false), 1500);
         }
-      });
-    };
+      }, 65);
+      return () => clearInterval(interval);
+    }, 700);
+    return () => clearTimeout(startDelay);
+  }, [fullText]);
 
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions
-    );
-
-    // Observe each element
-    elementRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
 
   const smoothScrollToSection = (sectionId) => {
     const targetElement = document.getElementById(sectionId);
@@ -131,9 +119,9 @@ const Home = () => {
   };
 
   const validateForm = () => {
-    const { name, email, phone, subject, message, gdprConsent } = formData;
+    const { name, email, message, gdprConsent } = formData;
 
-    if (!name || !email || !phone || !subject || !message) {
+    if (!name || !email || !message) {
       setAlert({ message: "Please fill out all fields.", type: "error" });
       return false;
     }
@@ -141,15 +129,6 @@ const Home = () => {
     if (!validator.isEmail(email)) {
       setAlert({
         message: "Please enter a valid email address.",
-        type: "error",
-      });
-      return false;
-    }
-
-    const phoneRegex = /^\+?[0-9\s\-()]{6,20}$/;
-    if (!phoneRegex.test(phone)) {
-      setAlert({
-        message: "Please enter a valid phone number.",
         type: "error",
       });
       return false;
@@ -188,7 +167,6 @@ const Home = () => {
       const result = await response.json();
 
       if (result.success) {
-        console.log("✅ Email sent successfully!");
         setAlert({
           message: "Your message has been sent successfully!",
           type: "success",
@@ -196,20 +174,16 @@ const Home = () => {
         setFormData({
           name: "",
           email: "",
-          phone: "",
-          subject: "",
           message: "",
           gdprConsent: false,
         });
       } else {
-        console.error("❌ Email sending failed:", result);
         setAlert({
           message: "There was an error sending your message. Please try again.",
           type: "error",
         });
       }
     } catch (error) {
-      console.error("🚨 Unexpected error in form submission:", error);
       setAlert({
         message: "An error occurred. Please try again later.",
         type: "error",
@@ -267,11 +241,6 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
 
-  const [openWindow, setOpenWindow] = useState(null);
-
-const toggleWindow = (key) => {
-  setOpenWindow(prev => (prev === key ? null : key));
-};
 
 
   return (
@@ -286,105 +255,22 @@ const toggleWindow = (key) => {
   </div>
 
   <div className="hero-container">
-    <img
-      src="/subtle-prism.svg"
-      alt="Background"
-      style={{
-        width: "1px",
-        height: "1px",
-        position: "absolute",
-        top: "0",
-        left: "0",
-        overflow: "hidden",
-        visibility: "hidden",
-        pointerEvents: "none",
-      }}
-      loading="eager"
-      decoding="async"
-    />
 
-    {/* DEV WINDOWS STACK */}
-    <div className="dev-stack">
-      {/* TOP WINDOW */}
-      <button
-        type="button"
-        className={`dev-window ${
-          openWindow === "top" ? "is-open" : ""
-        } ${openWindow === "bottom" ? "is-dim" : ""}`}
-        onClick={() => toggleWindow("top")}
-      >
-        <div className="dev-window-bar">
-          <span className="dot red"></span>
-          <span className="dot yellow"></span>
-          <span className="dot green"></span>
-          <span className="dev-title">custom development</span>
-        </div>
-
-        <div className="dev-content">
-          <div className="dev-line">
-            {t("We build custom websites and web applications.")}
-          </div>
-          <div className="dev-line dev-muted">
-            {t("No templates. No WordPress. Just real code.")}
-          </div>
-
-          <div className="dev-extra">
-            <div className="dev-line">
-              {t("Dashboards, booking systems, memberships, automations.")}
-            </div>
-            <div className="dev-line dev-muted">
-              {t("If you can imagine it — we can build it.")}
-            </div>
-          </div>
-        </div>
-      </button>
-
-      {/* BOTTOM WINDOW */}
-      <button
-        type="button"
-        className={`dev-window ${
-          openWindow === "bottom" ? "is-open" : ""
-        } ${openWindow === "top" ? "is-dim" : ""}`}
-        onClick={() => toggleWindow("bottom")}
-      >
-        <div className="dev-window-bar">
-          <span className="dot red"></span>
-          <span className="dot yellow"></span>
-          <span className="dot green"></span>
-          <span className="dev-title">tech & delivery</span>
-        </div>
-
-        <div className="dev-content">
-          <div className="dev-line">
-            {t("React, Node, Firebase. SEO-ready by default.")}
-          </div>
-          <div className="dev-line dev-muted">
-            {t("Fast, secure and scalable solutions.")}
-          </div>
-
-          <div className="dev-extra">
-            <div className="dev-line">
-              {t("Performance, clean UI, responsive layouts.")}
-            </div>
-            <div className="dev-line dev-muted">
-              {t("Built to grow with your business.")}
-            </div>
-          </div>
-        </div>
-      </button>
-    </div>
+    {/* HERO KICKER */}
+    <p className="hero-kicker">{t("hero_kicker")}</p>
 
     {/* HERO CARD */}
     <div className="hero-text">
       <h1 className="hero-title">
-        {t("We don’t use WordPress.")} <br />
-        <span className="hero-line2">{t("We code.")}</span>
+        {t("hero_title_1")} <br />
+        <span className="hero-line2">
+          {typedText}
+          {showCursor && <span className="typing-cursor">|</span>}
+        </span>
       </h1>
 
       <h2 className="hero-subtitle">
-        {t(
-          "Custom-built websites and applications developed from scratch, without limitations."
-        )}
+        {t("hero_subtitle")}
       </h2>
 
       <div className="hero-buttons">
@@ -392,10 +278,17 @@ const toggleWindow = (key) => {
           onClick={() => smoothScrollToSection("contact")}
           className="cta-button"
         >
-          {t("Request a quote")}
+          {t("hero_cta_primary")}
+        </button>
+        <button
+          onClick={() => smoothScrollToSection("how-it-works")}
+          className="cta-button-secondary"
+        >
+          {t("hero_cta_secondary")}
         </button>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -412,46 +305,28 @@ const toggleWindow = (key) => {
         <div className="services-grid">
           {[
             {
-              icon: webdevIcon,
-              title: t("Web Development"),
-              desc: t(
-                "Custom, responsive websites built for speed, performance, and scalability."
-              ),
+              icon: <FaCalendarAlt />,
+              num: "01",
+              title: t("Online Booking"),
+              desc: t("Clients can book appointments online in seconds. No back and forth messages."),
             },
             {
-              icon: mobappIcon,
-              title: t("Mobile App Development"),
-              desc: t(
-                "Cross-platform mobile apps built for intuitive user experience and seamless performance."
-              ),
+              icon: <FaTachometerAlt />,
+              num: "02",
+              title: t("Admin Control"),
+              desc: t("Manage schedules, clients and attendance from one simple dashboard."),
             },
             {
-              icon: onepageIcon,
-              title: t("One-Page Websites"),
-              desc: t(
-                "Sleek landing pages with fast load times and clean design – perfect for portfolios, products or services."
-              ),
+              icon: <FaBell />,
+              num: "03",
+              title: t("Waitlist and Notifications"),
+              desc: t("Automatically notify clients when a spot becomes available and keep your schedule full."),
             },
             {
-              icon: seoIcon,
-              title: t("SEO Optimization"),
-              desc: t(
-                "From keywords to technical improvements – we help you rank higher and get more traffic."
-              ),
-            },
-            {
-              icon: portfolioIcon,
-              title: t("Portfolio Design"),
-              desc: t(
-                "Custom portfolio pages designed to present your work with clarity and impact."
-              ),
-            },
-            {
-              icon: maintenanceIcon,
-              title: t("Website Maintenance"),
-              desc: t(
-                "Ongoing support, updates and optimizations – so your site stays fast and secure."
-              ),
+              icon: <FaSearch />,
+              num: "04",
+              title: t("SEO Websites"),
+              desc: t("Fast and modern websites built to increase visibility and bring more inquiries."),
             },
           ].map((item, index) => (
             <div
@@ -460,8 +335,9 @@ const toggleWindow = (key) => {
               style={{ "--delay-order": `${index * 0.15}s` }}
               data-threshold="0.15"
             >
+              <span className="service-card-number">{item.num}</span>
               <div className="icon-wrapper">
-                <img src={item.icon} alt={item.title} />
+                {item.icon}
               </div>
               <h3>{item.title}</h3>
               <p>{item.desc}</p>
@@ -469,73 +345,168 @@ const toggleWindow = (key) => {
           ))}
         </div>
 
-        <CTASection t={t} smoothScrollToSection={smoothScrollToSection} />
+      </section>
+
+      <section id="how-it-works" className="how-it-works-section">
+        <div className="how-it-works-header animate-on-scroll fade-in">
+          <h2>{t("how_it_works_title")}</h2>
+          <p className="how-it-works-intro">{t("how_it_works_intro")}</p>
+        </div>
+
+        <div className="how-steps">
+          {[
+            {
+              num: "01",
+              title: t("Understand Your Workflow"),
+              desc: t("We go through how your business currently operates and identify where digital tools can simplify your process."),
+            },
+            {
+              num: "02",
+              title: t("Build the Right System"),
+              desc: t("I design and develop a solution tailored to your specific needs, whether it is a booking system or a full web application."),
+            },
+            {
+              num: "03",
+              title: t("Launch and Improve"),
+              desc: t("After launch, we refine and adjust the system to make sure it supports your growth long term."),
+            },
+          ].map((step, i) => (
+            <div
+              key={i}
+              className="how-step animate-on-scroll slide-up-delayed"
+              style={{ "--delay-order": `${i * 0.18}` }}
+              data-threshold="0.2"
+            >
+              <div className="how-step-number">{step.num}</div>
+              <div className="how-step-content">
+                <h3>{step.title}</h3>
+                <p>{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="reviews-section">
+        <div className="reviews-header animate-on-scroll fade-in">
+          <div className="reviews-google-badge">
+            <FaGoogle className="google-icon-badge" />
+            <span>Google Reviews</span>
+          </div>
+          <h2>{t("reviews_title")}</h2>
+        </div>
+
+        <div className="reviews-grid">
+          {[
+            {
+              name: "M.G. Interijeri",
+              role: t("Interior Design Studio"),
+              text: t("review_1_text"),
+              avatar: mgInterijerImg,
+            },
+            {
+              name: "Gioia Reformer Pilates Studio",
+              role: t("Pilates Studio"),
+              text: t("review_2_text"),
+              avatar: gioiaImg,
+            },
+            {
+              name: "Marko Čakan",
+              role: t("Physiotherapist"),
+              text: t("review_3_text"),
+              avatar: markoCakanImg,
+            },
+          ].map((review, i) => {
+            const paragraphs = review.text.split("\n\n");
+            const isLong = paragraphs.length > 1;
+            const isExpanded = !!expandedReviews[i];
+            const displayed = isLong && !isExpanded ? [paragraphs[0]] : paragraphs;
+            return (
+              <div
+                key={i}
+                className="review-card animate-on-scroll slide-up-delayed"
+                style={{ "--delay-order": `${i * 0.15}s` }}
+                data-threshold="0.15"
+              >
+                <div className="review-card-top">
+                  <div className="reviewer-avatar">
+                    <img src={review.avatar} alt={review.name} />
+                  </div>
+                  <div className="reviewer-meta">
+                    <span className="reviewer-name">{review.name}</span>
+                    <span className="reviewer-role">{review.role}</span>
+                  </div>
+                  <FaGoogle className="review-g-icon" />
+                </div>
+                <div className="review-stars">★★★★★</div>
+                <div className="review-body">
+                  {displayed.map((para, j) => (
+                    <p key={j}>{para}</p>
+                  ))}
+                  {isLong && (
+                    <button
+                      className="read-more-toggle"
+                      onClick={() => toggleReview(i)}
+                    >
+                      {isExpanded ? t("Read less") : t("Read more")}
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </section>
 
       <section id="whyus" className="why-us-section">
         <h2 className="animate-on-scroll fade-in">
-          {t("Why Work With")} <br /> {t("LeMatech-Digital?")}
+          {t("Why Businesses Choose LeMatech Digital")}
         </h2>
 
-        <p className="why-us-intro animate-on-scroll slide-up">
-          {" "}
-          {t(
-            "We bring the precision of a developer with the mindset of a digital strategist. Here's what makes us the right fit for your next project:"
-          )}
+        <p className="why-us-tagline animate-on-scroll slide-up">
+          {t("You don’t need a big agency. You need the right developer.")}
         </p>
 
         <div className="why-us-grid">
           {[
             {
-              icon: collabIcon,
-              title: t("Personal Collaboration"),
+              icon: <FaHandshake />,
+              title: t("Direct Collaboration"),
               desc: t(
-                "You work directly with the developer – fast decisions, clear communication, and full project control."
+                "No account managers. No delays. You work directly with the developer building your product: faster decisions, clearer communication, better results."
               ),
             },
             {
-              icon: efficientIcon,
-              title: t("Efficient & Reliable Delivery"),
+              icon: <FaBolt />,
+              title: t("Built to Convert"),
               desc: t(
-                "Projects are delivered on time, built with care and focus, without unnecessary delays."
+                "Your website isn’t just something that looks good. It’s strategically structured to generate inquiries and turn visitors into paying clients."
               ),
             },
             {
-              icon: scalableIcon,
-              title: t("Clean, Scalable Code"),
+              icon: <FaMobileAlt />,
+              title: t("App-Level Experience"),
               desc: t(
-                "We write code that's built to last – maintainable, modular, and ready to grow with your business."
+                "When needed, your website is built as a Progressive Web App: lightning-fast, installable on mobile, and designed to feel like a real application."
               ),
             },
             {
-              icon: mobileIcon,
-              title: t("Mobile-First, User-Centered"),
-              desc: t(
-                "Every website and app we create is designed for performance across all devices and screen sizes."
-              ),
-            },
-            {
-              icon: seo2Icon,
-              title: t("SEO-Focused from Day One"),
-              desc: t(
-                "We apply smart, clean structure and metadata that helps you rank – no extra costs, no later fixes."
-              ),
-            },
-            {
-              icon: partnerIcon,
+              icon: <FaShieldAlt />,
               title: t("Long-Term Partnership"),
               desc: t(
-                "Beyond launch, we’re here for updates, support, and helping your digital presence evolve."
+                "Launching your website is just the beginning. I stay involved to help you improve, scale and adapt as your business grows."
               ),
             },
           ].map((item, index) => (
             <div
               className="why-card animate-on-scroll slide-up-delayed"
               style={{ "--delay-order": `${index * 0.15}s` }}
-              data-threshold="0.25"
+              data-threshold="0.2"
               key={index}
             >
-              <img src={item.icon} alt={item.title} className="why-icon" />
+              <div className="why-icon-wrapper">
+                {item.icon}
+              </div>
               <h3>{item.title}</h3>
               <p>{item.desc}</p>
             </div>
@@ -543,276 +514,136 @@ const toggleWindow = (key) => {
         </div>
       </section>
 
-      <section id="projects" className="projects">
-        <h2
-          className="animate-on-scroll fade-in"
-          style={{ "--delay-order": "1s" }}
-        >
-          {t("Projects in Action")}
-        </h2>
-
-        <p
-          className="projects-intro animate-on-scroll slide-up"
-          style={{ "--delay-order": "1.4s" }}
-        >
-          {t(
-            "A collection of live projects - from concept to deployment. More case studies coming soon as LeMatech-Digital continues to grow."
-          )}
-        </p>
-
-        <div
-          className="project-container animate-on-scroll"
-          style={{ "--delay-order": "2s" }}
-          data-threshold="0.2"
-        >
-          <div className="project-grid no-card-layout">
-            {[
-              {
-                href: "https://bbuddy-ya89.vercel.app/",
-                src: buddyImg,
-                alt: "Bite Buddy App",
-              },
-              {
-                href: "https://star-wars-phi-green.vercel.app/",
-                src: warsImg,
-                alt: "Star Wars Fan App",
-              },
-              {
-                href: "https://git-hub-user-info-iota.vercel.app/",
-                src: hubImg,
-                alt: "GitHub User Info App",
-              },
-              {
-                href: "https://smartstyleecom.vercel.app/",
-                src: styleImg,
-                alt: "Smart Style App",
-              },
-            ].map((project, index) => (
-              <a
-                key={index}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="animate-on-scroll fade-in"
-                style={{ "--delay-order": "1s" }}
-              >
-                <img
-                  src={project.src}
-                  alt={project.alt}
-                  className="project-image"
-                  loading="lazy"
-                />
-              </a>
-            ))}
+      <section className="meet-dev-section">
+        <div className="meet-dev-container">
+          <div className="meet-dev-image animate-on-scroll fade-in">
+            <span className="meet-dev-placeholder">{t("Photo coming soon")}</span>
+          </div>
+          <div className="meet-dev-content animate-on-scroll slide-in-right">
+            <h2>{t("Meet the Developer")}</h2>
+            <p>{t("I'm the developer behind LeMatech Digital.")}</p>
+            <p>{t("I work directly with service-based businesses to design and build digital systems that simplify daily operations and support long-term growth.")}</p>
+            <p>{t("My focus is not just on how things look, but on how they function. Every system is built around the real workflow of your business.")}</p>
+            <p>{t("You'll work directly with me from the first idea to launch.")}</p>
           </div>
         </div>
       </section>
 
+
       <section id="contact" className="contact-section">
-        <div className="contact-wrapper">
-          {/* LEFT SIDE */}
-          <div className="contact-info">
-            <h2
-              className="animate-on-scroll fade-in"
-              style={{ "--delay-order": "0.5s" }}
-            >
-              {t("It's time to build something exciting!")}
-            </h2>
-            <p
-              className="animate-on-scroll slide-up"
-              style={{ "--delay-order": "0.5s" }}
-            >
-              {t(
-                "Let’s turn your ideas into real digital solutions — whether it’s a new site, app, or a bold redesign. We’re ready when you are."
-              )}
-            </p>
+        <div className="contact-header animate-on-scroll fade-in">
+          <h2>{t("Let’s talk about your booking system")}</h2>
+          <p>{t("Tell me how you currently manage bookings and clients. I’ll reply with next steps and a simple plan.")}</p>
+        </div>
 
-            <div
-              className="testimonial-box animate-on-scroll slide-in-left"
-              style={{ "--delay-order": "0.6s" }}
-            >
-              <div className="stars">★★★★★</div>
-              <p className="quote">
-                {t(
-                  "Working with LeMatech-Digital was seamless. Our new site not only looks amazing, but it’s lightning-fast and already ranking better on Google. Everything just works, and we finally feel in control."
-                )}
-              </p>
-
-              <div className="author">
-                <img src={IvanaImg} alt="Ivana Kovač" />
-                <div>
-                  <strong>Ivana Kovač</strong>
-                  <span>{t("Small Business Owner")}</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="contact-cards">
           <div
-            className="form-wrapper animate-on-scroll slide-in-right"
-            style={{ "--delay-order": "0.4s" }}
+            className="contact-form-card animate-on-scroll slide-up"
+            data-threshold="0.15"
+            style={{ "--delay-order": "0.1s" }}
           >
-            <form
-              className="contact-form"
-              onSubmit={handleSubmit}
-              action="https://formsubmit.co/info@lematech-digital.com"
-              method="POST"
-            >
-              <h3 className="form-title">{t("Get a free quote")}</h3>
-              <p className="form-desc">
-                {t(
-                  "Tell us a bit about your project or idea - we're here to listen and will get back to you shortly with next steps."
-                )}
-              </p>
-
-              <div className="form-grid">
-                <div className="form-row">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder={t("Your name")}
-                    value={formData.name}
-                    onChange={handleChange}
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder={t("Email address")}
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-                </div>
-
+            <h3 className="contact-card-title">{t("Send a Message")}</h3>
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="name"
+                placeholder={t("Name")}
+                value={formData.name}
+                onChange={handleChange}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder={t("Email")}
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <textarea
+                name="message"
+                placeholder={t("Tell me a bit about your business and what you need")}
+                rows="4"
+                value={formData.message}
+                onChange={handleChange}
+              />
+              <div className="gdpr-consent">
                 <input
-                  type="text"
-                  name="phone"
-                  placeholder={t("Phone number")}
-                  value={formData.phone}
+                  type="checkbox"
+                  id="gdpr"
+                  name="gdprConsent"
+                  checked={formData.gdprConsent}
                   onChange={handleChange}
                 />
-
-                <input
-                  type="text"
-                  name="subject"
-                  placeholder={t("Subject")}
-                  value={formData.subject}
-                  onChange={handleChange}
-                />
-
-                <textarea
-                  name="message"
-                  placeholder={t("Project brief")}
-                  rows="3"
-                  value={formData.message}
-                  onChange={handleChange}
-                ></textarea>
+                <label htmlFor="gdpr">
+                  {t("I consent to the")}&nbsp;
+                  <a href="/privacy-policy" target="_blank">
+                    {t("GDPR Terms")}
+                  </a>
+                </label>
               </div>
-
-              <div className="gdpr-wrapper">
-                <div className="gdpr-consent">
-                  <input
-                    type="checkbox"
-                    id="gdpr"
-                    name="gdprConsent"
-                    checked={formData.gdprConsent}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="gdpr">
-                    {t("I consent to the")}&nbsp;
-                    <a href="/privacy-policy" target="_blank">
-                      {t("GDPR Terms")}
-                    </a>
-                  </label>
-                </div>
-              </div>
-
               <button type="submit" className="submit-btn">
-                {t("Get Free Quote")}
+                {t("Send Message")}
               </button>
-
+              <p className="reply-time">{t("I usually reply within 24 to 48 hours.")}</p>
               {alert.message && (
                 <div className={`alert ${alert.type}`}>{alert.message}</div>
               )}
             </form>
           </div>
-        </div>
-        <div className="contact-alt">
-          <div className="contact-alt-wrapper">
-            <div className="reach-options">
-              <div
-                className="reach-options animate-on-scroll slide-in-left"
-                style={{ "--delay-order": "0.7s" }}
-              >
-                <div className="reach-box combined">
-                  <div className="reach-row">
-                    <FaEnvelope className="reach-icon" />
-                    <div className="reach-content">
-                      <span className="reach-label">{t("E-mail")}</span>
-                      <a href="mailto:info@lematech-digital.com">
-                        info@lematech-digital.com
-                      </a>
-                    </div>
-                  </div>
 
-                  <div className="reach-divider" />
-
-                  <div className="reach-row">
-                    <FaPhoneAlt className="reach-icon" />
-                    <div className="reach-content">
-                      <span className="reach-label">{t("Phone")}</span>
-                      <a href="tel:+385911529422">+385 91 152 9422</a>
-                    </div>
-                  </div>
-
-                  <div className="reach-divider" />
-
-                  <div className="reach-row">
-                    <FaShareAlt className="reach-icon" />
-                    <div className="reach-content">
-                      <span className="reach-label">{t("Socials")}</span>
-                      <div className="social-links">
-                        <a
-                          href="https://www.facebook.com/people/LeMatech-Digital/61575004322467/"
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <FaFacebookF /> Facebook
-                        </a>
-                        <a
-                          href="https://www.instagram.com/lematechcode/"
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <FaInstagram /> Instagram
-                        </a>
-                        <a
-                          href="https://www.linkedin.com/in/lea-var%C5%BEi%C4%87-71a731324/"
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <FaLinkedinIn /> LinkedIn
-                        </a>
-                      </div>
-                    </div>
+          <div
+            className="contact-direct-card animate-on-scroll slide-up"
+            data-threshold="0.15"
+            style={{ "--delay-order": "0.25s" }}
+          >
+            <h3 className="contact-card-title">{t("Prefer direct contact?")}</h3>
+            <div className="contact-direct-rows">
+              <div className="contact-direct-row">
+                <FaEnvelope className="contact-direct-icon" />
+                <div className="contact-direct-content">
+                  <span className="contact-direct-label">{t("E-mail")}</span>
+                  <a href="mailto:info@lematech-digital.com">
+                    info@lematech-digital.com
+                  </a>
+                </div>
+              </div>
+              <div className="contact-direct-divider" />
+              <div className="contact-direct-row">
+                <FaPhoneAlt className="contact-direct-icon" />
+                <div className="contact-direct-content">
+                  <span className="contact-direct-label">{t("Phone")}</span>
+                  <a href="tel:+385911529422">+385 91 152 9422</a>
+                </div>
+              </div>
+              <div className="contact-direct-divider" />
+              <div className="contact-direct-row">
+                <FaShareAlt className="contact-direct-icon" />
+                <div className="contact-direct-content">
+                  <span className="contact-direct-label">{t("Socials")}</span>
+                  <div className="social-links">
+                    <a
+                      href="https://www.facebook.com/people/LeMatech-Digital/61575004322467/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <FaFacebookF /> Facebook
+                    </a>
+                    <a
+                      href="https://www.instagram.com/lematechcode/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <FaInstagram /> Instagram
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/lea-var%C5%BEi%C4%87-71a731324/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <FaLinkedinIn /> LinkedIn
+                    </a>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="contact-alt-text">
-              <h2
-                className="animate-on-scroll fade-in"
-                style={{ "--delay-order": "0.5s" }}
-              >
-                {t("Not a fan of forms?")} <br />
-                {t("No problem!")}
-              </h2>
-              <p
-                className="animate-on-scroll slide-up"
-                style={{ "--delay-order": "0.9s" }}
-              >
-                {t(
-                  "We get it — sometimes it's easier to just talk. Whether you prefer email, phone or a quick DM, we’re here and happy to connect however works best for you."
-                )}
-              </p>
             </div>
           </div>
         </div>
