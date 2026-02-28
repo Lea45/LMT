@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import validator from "validator";
 import "./Home.css";
 import "../components/Contact.css";
-import CTASection from "../components/CTASection.jsx";
 import {
   FaEnvelope,
   FaPhoneAlt,
@@ -387,7 +386,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="reviews-section">
+      <section id="reviews" className="reviews-section">
         <div className="reviews-header animate-on-scroll fade-in">
           <div className="reviews-google-badge">
             <FaGoogle className="google-icon-badge" />
