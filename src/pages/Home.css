@@ -1998,6 +1998,7 @@ body {
 .sw-media {
   width: 100%;
   aspect-ratio: 16 / 9;
+  min-height: 190px; /* fallback for Safari < 15 which ignores aspect-ratio */
   background: #0b0b0b;
   overflow: hidden;
   position: relative;
