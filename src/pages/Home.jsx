@@ -555,11 +555,11 @@ const Home = () => {
             <img src={devCover} alt="LeMatech Digital developer" className="meet-dev-photo" style={{ objectPosition: "center 35%", transform: "rotate(6deg) scale(1.08)" }} />
           </div>
           <div className="meet-dev-content animate-on-scroll slide-in-right">
-            <h2>{t("meet_dev_title", { defaultValue: "The Person Behind LeMatech Digital" })}</h2>
-            <p>{t("meet_dev_p1", { defaultValue: "I'm Lea — the developer, designer and founder behind LeMatech Digital." })}</p>
-            <p>{t("meet_dev_p2", { defaultValue: "I work directly with service-based businesses to design and build digital systems that simplify daily operations and support long-term growth." })}</p>
-            <p>{t("meet_dev_p3", { defaultValue: "My focus is not just on how things look, but on how they function. Every system is built around the real workflow of your business." })}</p>
-            <p>{t("meet_dev_p4", { defaultValue: "You'll work directly with me from the first idea to launch." })}</p>
+            <h2>{t("meet_dev_title", { defaultValue: "The Person Behind LeMatech-Digital" })}</h2>
+            <p>{t("meet_dev_p1", { defaultValue: "I'm Lea, the developer, designer and founder behind LeMatech-Digital. I build everything from scratch, with no templates and no shortcuts." })}</p>
+            <p>{t("meet_dev_p2", { defaultValue: "I start by listening to your ideas and learning how your business works, then propose the solutions that fit your situation best." })}</p>
+            <p>{t("meet_dev_p3", { defaultValue: "If you have a design in mind, I'll follow it. If not, I'll put together a few visual directions that could work for your business and we choose together." })}</p>
+            <p>{t("meet_dev_p4", { defaultValue: "From the first idea to launch, you work directly with me." })}</p>
           </div>
         </div>
       </section>
