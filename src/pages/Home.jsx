@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import validator from "validator";
 import "./Home.css";
 import "../components/Contact.css";
@@ -18,12 +19,20 @@ import {
   FaBolt,
   FaMobileAlt,
   FaShieldAlt,
+  FaPlay,
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
 import mgInterijerImg from "../assets/mg-interijeri.jpeg";
 import gioiaImg from "../assets/gioia .jpeg";
 import markoCakanImg from "../assets/markocakan.jpeg";
+import gioiaVideo from "../assets/projects/gioia-app-video.mp4";
+import gioiaCover from "../assets/apps/gioia-cover.png";
+import fizioVideo from "../assets/projects/fizio-app-video.mp4";
+import fizioCover from "../assets/apps/fizio-cover.png";
+import mgCover from "../assets/apps/mg-cover.png";
+import devCover from "../assets/apps/dev-cover.png";
+import gioiaWebCover from "../assets/apps/gioia-web-cover.jpg";
 
 
 const Home = () => {
@@ -41,6 +50,33 @@ const Home = () => {
   });
 
   const [alert, setAlert] = useState({ message: "", type: "" });
+
+
+  // ── Video modal (shared for all project videos) ──
+  const [activeVideo, setActiveVideo] = useState(null);
+  const modalVideoRef = useRef(null);
+
+  const openVideoModal = (src) => setActiveVideo(src);
+
+  const closeVideoModal = () => {
+    if (modalVideoRef.current) {
+      modalVideoRef.current.pause();
+      modalVideoRef.current.currentTime = 0;
+    }
+    setActiveVideo(null);
+  };
+
+  useEffect(() => {
+    if (!activeVideo) return;
+    const handleKey = (e) => { if (e.key === "Escape") closeVideoModal(); };
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [activeVideo]);
+
 
 
   // Typewriter effect for hero title line 2
@@ -121,13 +157,13 @@ const Home = () => {
     const { name, email, message, gdprConsent } = formData;
 
     if (!name || !email || !message) {
-      setAlert({ message: "Please fill out all fields.", type: "error" });
+      setAlert({ message: t("Please fill out all fields."), type: "error" });
       return false;
     }
 
     if (!validator.isEmail(email)) {
       setAlert({
-        message: "Please enter a valid email address.",
+        message: t("Please enter a valid email address."),
         type: "error",
       });
       return false;
@@ -135,7 +171,7 @@ const Home = () => {
 
     if (!gdprConsent) {
       setAlert({
-        message: "You must consent to the GDPR terms.",
+        message: t("You must consent to the GDPR terms."),
         type: "error",
       });
       return false;
@@ -167,7 +203,7 @@ const Home = () => {
 
       if (result.success) {
         setAlert({
-          message: "Your message has been sent successfully!",
+          message: t("Your message has been sent successfully!"),
           type: "success",
         });
         setFormData({
@@ -178,13 +214,13 @@ const Home = () => {
         });
       } else {
         setAlert({
-          message: "There was an error sending your message. Please try again.",
+          message: t("There was an error sending your message. Please try again."),
           type: "error",
         });
       }
     } catch (error) {
       setAlert({
-        message: "An error occurred. Please try again later.",
+        message: t("An error occurred. Please try again later."),
         type: "error",
       });
     }
@@ -516,18 +552,310 @@ const Home = () => {
       <section className="meet-dev-section">
         <div className="meet-dev-container">
           <div className="meet-dev-image animate-on-scroll fade-in">
-            <span className="meet-dev-placeholder">{t("Photo coming soon")}</span>
+            <img src={devCover} alt="LeMatech Digital developer" className="meet-dev-photo" style={{ objectPosition: "center 35%", transform: "rotate(6deg) scale(1.08)" }} />
           </div>
           <div className="meet-dev-content animate-on-scroll slide-in-right">
-            <h2>{t("Meet the Developer")}</h2>
-            <p>{t("I'm the developer behind LeMatech Digital.")}</p>
-            <p>{t("I work directly with service-based businesses to design and build digital systems that simplify daily operations and support long-term growth.")}</p>
-            <p>{t("My focus is not just on how things look, but on how they function. Every system is built around the real workflow of your business.")}</p>
-            <p>{t("You'll work directly with me from the first idea to launch.")}</p>
+            <h2>{t("meet_dev_title", { defaultValue: "The Person Behind LeMatech Digital" })}</h2>
+            <p>{t("meet_dev_p1", { defaultValue: "I'm Lea — the developer, designer and founder behind LeMatech Digital." })}</p>
+            <p>{t("meet_dev_p2", { defaultValue: "I work directly with service-based businesses to design and build digital systems that simplify daily operations and support long-term growth." })}</p>
+            <p>{t("meet_dev_p3", { defaultValue: "My focus is not just on how things look, but on how they function. Every system is built around the real workflow of your business." })}</p>
+            <p>{t("meet_dev_p4", { defaultValue: "You'll work directly with me from the first idea to launch." })}</p>
           </div>
         </div>
       </section>
 
+      {/* ── Selected Work ── */}
+      <section className="selected-work-section">
+        <div className="selected-work-header animate-on-scroll fade-in">
+          <h2>{t("Selected Work")}</h2>
+          <p>{t("A few real projects I built for service businesses.")}</p>
+        </div>
+
+        <div className="selected-work-grid">
+
+          {/* ── Featured: Gioia case study ── */}
+          <div className="sw-card sw-card--featured animate-on-scroll fade-in">
+
+            {/* Thumbnail with play overlay */}
+            <div
+              className="sw-media sw-media--thumb"
+              onClick={() => openVideoModal(gioiaVideo)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && openVideoModal(gioiaVideo)}
+              aria-label={t("Play Gioia Reformer Pilates demo video")}
+            >
+              <img
+                src={gioiaCover}
+                alt="Gioia Reformer Pilates app preview"
+                className="sw-thumb-img"
+              />
+              <div className="sw-play-btn" aria-hidden="true">
+                <FaPlay />
+              </div>
+            </div>
+
+            {/* Case study body */}
+            <div className="sw-body">
+              <div className="sw-tags">
+                <span className="sw-tag">{t("Booking System")}</span>
+                <span className="sw-tag">{t("Admin Dashboard")}</span>
+                <span className="sw-tag">{t("Waitlist")}</span>
+                <span className="sw-tag">{t("Notifications")}</span>
+              </div>
+              <h3>{t("Gioia Reformer Pilates")}</h3>
+              <p className="sw-intro">{t("Custom-built booking system with waitlist logic, admin control and client management.")}</p>
+
+              <div className="sw-divider" />
+
+              <div className="sw-case-section">
+                <h4 className="sw-case-heading">{t("About the Project")}</h4>
+                <p>{t("Gioia Reformer Pilates needed a custom booking system with session capacity control, waitlist management and weekly schedule generation.")}</p>
+              </div>
+
+              <div className="sw-case-section">
+                <h4 className="sw-case-heading">{t("The Problem")}</h4>
+                <ul className="sw-case-list">
+                  <li>{t("Manual booking via messages")}</li>
+                  <li>{t("No automatic capacity control")}</li>
+                  <li>{t("No waitlist system")}</li>
+                  <li>{t("No visibility over client attendance")}</li>
+                  <li>{t("Time lost managing cancellations")}</li>
+                </ul>
+              </div>
+
+              <div className="sw-case-section">
+                <h4 className="sw-case-heading">{t("The Solution")}</h4>
+                <ul className="sw-case-list">
+                  <li>{t("Weekly schedule generation system")}</li>
+                  <li>{t("Session capacity limit per class")}</li>
+                  <li>{t("Automatic waitlist logic")}</li>
+                  <li>{t("Admin dashboard for full control")}</li>
+                  <li>{t('Client dashboard with "My Bookings"')}</li>
+                  <li>{t("WhatsApp notification integration")}</li>
+                  <li>{t("Reservation logic with visit tracking")}</li>
+                </ul>
+              </div>
+
+              <div className="sw-case-section">
+                <h4 className="sw-case-heading">{t("Key Features")}</h4>
+                <div className="sw-features">
+                  <div className="sw-feature">
+                    <strong>{t("Booking System")}</strong>
+                    <span>{t("Clients can reserve available sessions in real time.")}</span>
+                  </div>
+                  <div className="sw-feature">
+                    <strong>{t("Waitlist Logic")}</strong>
+                    <span>{t("When a spot becomes available, the next client is automatically promoted.")}</span>
+                  </div>
+                  <div className="sw-feature">
+                    <strong>{t("Admin Control Panel")}</strong>
+                    <span>{t("Manage sessions, clients, availability and publish weekly schedules.")}</span>
+                  </div>
+                  <div className="sw-feature">
+                    <strong>{t("Notification Integration")}</strong>
+                    <span>{t("WhatsApp messages triggered on promotions and updates.")}</span>
+                  </div>
+                  <div className="sw-feature">
+                    <strong>{t("Visit Tracking")}</strong>
+                    <span>{t("Remaining visits are automatically reduced and restored on valid cancellations.")}</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* ── Featured: Fizio case study ── */}
+          <div className="sw-card sw-card--featured animate-on-scroll fade-in">
+
+            {/* Thumbnail with play overlay */}
+            <div
+              className="sw-media sw-media--thumb"
+              onClick={() => openVideoModal(fizioVideo)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && openVideoModal(fizioVideo)}
+              aria-label={t("Play Fizio App demo video")}
+            >
+              <img
+                src={fizioCover}
+                alt="Fizio App preview"
+                className="sw-thumb-img"
+                style={{ objectFit: "contain" }}
+              />
+              <div className="sw-play-btn" aria-hidden="true">
+                <FaPlay />
+              </div>
+            </div>
+
+            {/* Case study body */}
+            <div className="sw-body">
+              <div className="sw-tags">
+                <span className="sw-tag">{t("Booking System")}</span>
+                <span className="sw-tag">{t("Admin Dashboard")}</span>
+                <span className="sw-tag">{t("Waitlist")}</span>
+                <span className="sw-tag">{t("Exercise Management")}</span>
+              </div>
+              <h3>{t("Fizio App")}</h3>
+              <p className="sw-intro">{t("Custom-built booking and client management system for physiotherapists with individual exercise tracking.")}</p>
+
+              <div className="sw-divider" />
+
+              <div className="sw-case-section">
+                <h4 className="sw-case-heading">{t("About the Project")}</h4>
+                <p>{t("A physiotherapy practice needed a tailored system for managing sessions and clients, with the ability to add individual exercise plans that each client can access at any time.")}</p>
+              </div>
+
+              <div className="sw-case-section">
+                <h4 className="sw-case-heading">{t("The Problem")}</h4>
+                <ul className="sw-case-list">
+                  <li>{t("Manual booking via messages")}</li>
+                  <li>{t("No automatic capacity control")}</li>
+                  <li>{t("No waitlist system")}</li>
+                  <li>{t("No visibility over client attendance")}</li>
+                  <li>{t("Time lost managing cancellations")}</li>
+                  <li>{t("No centralised system for tracking client exercises")}</li>
+                </ul>
+              </div>
+
+              <div className="sw-case-section">
+                <h4 className="sw-case-heading">{t("The Solution")}</h4>
+                <ul className="sw-case-list">
+                  <li>{t("Weekly schedule generation system")}</li>
+                  <li>{t("Session capacity limit per class")}</li>
+                  <li>{t("Automatic waitlist logic")}</li>
+                  <li>{t("Admin dashboard for full control")}</li>
+                  <li>{t('Client dashboard with "My Bookings"')}</li>
+                  <li>{t("WhatsApp notification integration")}</li>
+                  <li>{t("Reservation logic with visit tracking")}</li>
+                  <li>{t("Individual exercise and description management per client")}</li>
+                  <li>{t("Exercise library accessible to clients at all times")}</li>
+                </ul>
+              </div>
+
+              <div className="sw-case-section">
+                <h4 className="sw-case-heading">{t("Key Features")}</h4>
+                <div className="sw-features">
+                  <div className="sw-feature">
+                    <strong>{t("Booking System")}</strong>
+                    <span>{t("Clients can reserve available sessions in real time.")}</span>
+                  </div>
+                  <div className="sw-feature">
+                    <strong>{t("Waitlist Logic")}</strong>
+                    <span>{t("When a spot becomes available, the next client is automatically promoted.")}</span>
+                  </div>
+                  <div className="sw-feature">
+                    <strong>{t("Admin Control Panel")}</strong>
+                    <span>{t("Manage sessions, clients, availability and publish weekly schedules.")}</span>
+                  </div>
+                  <div className="sw-feature">
+                    <strong>{t("Notification Integration")}</strong>
+                    <span>{t("WhatsApp messages triggered on promotions and updates.")}</span>
+                  </div>
+                  <div className="sw-feature">
+                    <strong>{t("Visit Tracking")}</strong>
+                    <span>{t("Remaining visits are automatically reduced and restored on valid cancellations.")}</span>
+                  </div>
+                  <div className="sw-feature">
+                    <strong>{t("Exercise Management")}</strong>
+                    <span>{t("Admin can add exercises and notes to each client profile.")}</span>
+                  </div>
+                  <div className="sw-feature">
+                    <strong>{t("Client Exercise View")}</strong>
+                    <span>{t("Clients can access their personalised exercises at any time.")}</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* ── Secondary cards (website projects) ── */}
+          <div className="sw-secondary-grid">
+
+            {/* MG Interijeri */}
+            <a
+              className="sw-card sw-card--link animate-on-scroll fade-in"
+              href="https://mg-interijeri.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="M.G. Interijeri - Visit website"
+            >
+              <div className="sw-media">
+                <img src={mgCover} alt="M.G. Interijeri website preview" className="sw-thumb-img" style={{ objectFit: "contain", objectPosition: "center" }} />
+              </div>
+              <div className="sw-body">
+                <div className="sw-tags">
+                  <span className="sw-tag">{t("Website")}</span>
+                  <span className="sw-tag">{t("Local Business")}</span>
+                  <span className="sw-tag">{t("Construction")}</span>
+                </div>
+                <h3>M.G. Interijeri</h3>
+                <p>{t("Modern website for a construction finishing company: drywall, painting, flooring and renovations in Pula and Istria.")}</p>
+                <span className="sw-link">{t("Visit Website")} →</span>
+              </div>
+            </a>
+
+            {/* Gioia Web */}
+            <a
+              className="sw-card sw-card--link animate-on-scroll fade-in"
+              href="https://gioia-web.pages.dev/hr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Gioia Reformer Pilates - Visit website"
+            >
+              <div className="sw-media">
+                <img src={gioiaWebCover} alt="Gioia Reformer Pilates website preview" className="sw-thumb-img" style={{ objectFit: "contain", objectPosition: "center" }} />
+              </div>
+              <div className="sw-body">
+                <div className="sw-tags">
+                  <span className="sw-tag">{t("Website")}</span>
+                  <span className="sw-tag">{t("Multilingual")}</span>
+                  <span className="sw-tag">{t("Fitness")}</span>
+                </div>
+                <h3>Gioia Reformer Pilates</h3>
+                <p>{t("Modern website for a pilates studio. Visitors can learn about the offer, discover reformer pilates, view the session schedule and contact the studio.")}</p>
+                <span className="sw-link">{t("Visit Website")} →</span>
+              </div>
+            </a>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── Video modal ── */}
+      {activeVideo && createPortal(
+        <div
+          className="sw-modal-overlay"
+          onClick={closeVideoModal}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Video player"
+        >
+          <div
+            className="sw-modal-container"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="sw-modal-close"
+              onClick={closeVideoModal}
+              aria-label="Close video"
+            >
+              ✕
+            </button>
+            <video
+              ref={modalVideoRef}
+              src={activeVideo}
+              controls
+              playsInline
+              autoPlay
+              style={{ width: "100%", maxHeight: "80vh", objectFit: "contain", display: "block" }}
+            />
+          </div>
+        </div>,
+        document.body
+      )}
 
       <section id="contact" className="contact-section">
         <div className="contact-header animate-on-scroll fade-in">

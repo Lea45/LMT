@@ -302,9 +302,23 @@
   }
 }
 
+@media (max-width: 600px) {
+  .contact-section {
+    padding: 3rem 1.5rem;
+  }
+  .contact-header h2 {
+    font-size: 1.65rem;
+    line-height: 1.4;
+  }
+}
+
 @media (max-width: 400px) {
   .contact-section {
-    padding: 3rem 1rem;
+    padding: 2.5rem 1rem;
+  }
+  .contact-header h2 {
+    font-size: 1.45rem;
+    line-height: 1.42;
   }
 
   .contact-form-card,

@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(python3 -c \":*)",
+      "Bash(node -e \":*)",
+      "WebFetch(domain:mg-interijeri.vercel.app)",
+      "WebFetch(domain:gioia-web.pages.dev)"
     ]
   }
 }

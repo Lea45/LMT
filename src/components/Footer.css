@@ -148,18 +148,26 @@
     padding-bottom: 0;
   }
 
-  /* Stack order: brand → contact → links */
+  /* Stack order: brand → contact (email/phone/social) → links */
   .footer-col:nth-child(1) { order: 1; }
   .footer-col:nth-child(3) { order: 2; }
   .footer-col:nth-child(2) { order: 3; }
 
-  /* Section spacing with separator lines */
+  /* Each section is a centered column with separator */
   .footer-col {
-    padding: 2.2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  /* Brand column */
+  /* Hide column headings — simplified mobile layout */
+  .footer-col-heading {
+    display: none;
+  }
+
+  /* Brand */
   .footer-logo-link {
     justify-content: center;
     margin-bottom: 0.8rem;
@@ -174,28 +182,26 @@
     margin: 0 auto;
     font-size: 0.9rem;
     line-height: 1.7;
+    text-align: center;
   }
 
-  /* Column headings */
-  .footer-col-heading {
-    font-size: 0.72rem;
-    margin-bottom: 1.2rem;
-  }
-
-  /* Contact links */
+  /* Contact: email + phone centered */
   .footer-contact-list {
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.7rem;
   }
 
   .footer-contact-list a {
     font-size: 0.93rem;
   }
 
-  /* Social icons: centered row, more breathing room */
+  /* Social row: separated from contact by top border */
   .footer-social {
     justify-content: center;
-    margin-top: 1.5rem;
+    margin-top: 1.4rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    width: 100%;
     gap: 0.75rem;
   }
 
@@ -205,19 +211,23 @@
     font-size: 0.85rem;
   }
 
-  /* Links column: hide Home + Contact, show only legal links */
-  .footer-nav a:nth-child(1),
-  .footer-nav a:nth-child(2) {
-    display: none;
-  }
-
+  /* Links: horizontal row, all links visible */
   .footer-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.3rem 1rem;
   }
 
   .footer-nav a {
-    font-size: 0.93rem;
+    font-size: 0.85rem;
+  }
+
+  /* Show all nav links (including Home + Contact) */
+  .footer-nav a:nth-child(1),
+  .footer-nav a:nth-child(2) {
+    display: inline-flex;
   }
 
   /* Bottom bar */
@@ -233,6 +243,10 @@
 @media (max-width: 400px) {
   .footer {
     padding: 3rem 1rem 0;
+  }
+
+  .footer-col {
+    padding: 1.7rem 0;
   }
 
   .footer-social a {

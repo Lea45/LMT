@@ -86,32 +86,32 @@ const Footer = () => {
           <div className="footer-contact-list">
             <a href="mailto:info@lematech-digital.com">info@lematech-digital.com</a>
             <a href="tel:+385911529422">+385 91 152 9422</a>
-            <div className="footer-social">
-              <a
-                href="https://www.facebook.com/people/LeMatech-Digital/61575004322467/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-              >
-                <FaFacebookF />
-              </a>
-              <a
-                href="https://www.instagram.com/lematechcode/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-              >
-                <FaInstagram />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/lea-var%C5%BEi%C4%87-71a731324/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedinIn />
-              </a>
-            </div>
+          </div>
+          <div className="footer-social">
+            <a
+              href="https://www.facebook.com/people/LeMatech-Digital/61575004322467/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <FaFacebookF />
+            </a>
+            <a
+              href="https://www.instagram.com/lematechcode/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/lea-var%C5%BEi%C4%87-71a731324/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedinIn />
+            </a>
           </div>
         </div>
 
