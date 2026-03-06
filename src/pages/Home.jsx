@@ -253,7 +253,7 @@ const Home = () => {
     const elements = document.querySelectorAll(".animate-on-scroll");
 
     elements.forEach((el) => {
-      const customThreshold = parseFloat(el.dataset.threshold || "0.6");
+      const customThreshold = parseFloat(el.dataset.threshold || "0.15");
       const individualObserver = new IntersectionObserver(
         (entries, obs) => {
           entries.forEach((entry) => {
@@ -268,7 +268,7 @@ const Home = () => {
             }
           });
         },
-        { threshold: customThreshold }
+        { threshold: customThreshold, rootMargin: "0px 0px 50px 0px" }
       );
       individualObserver.observe(el);
     });
